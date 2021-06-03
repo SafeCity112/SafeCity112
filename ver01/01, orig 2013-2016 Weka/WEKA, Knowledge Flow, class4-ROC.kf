@@ -1,0 +1,101 @@
+{
+	"flow_name" : "WEKA, Knowledge Flow, class4-ROC",
+	"steps" : [
+		{
+			"class" : "weka.knowledgeflow.steps.Classifier",
+			"properties" : {
+				"classifier" : {
+					"type" : "optionHandler",
+					"class" : "weka.classifiers.meta.CVParameterSelection",
+					"options" : "-X 10 -S 1 -W weka.classifiers.rules.ZeroR"
+				},
+				"loadClassifierFileName" : "",
+				"name" : "CVParameterSelection",
+				"resetIncrementalClassifier" : false,
+				"updateIncrementalClassifier" : true
+			},
+			"connections" : {
+			},
+			"coordinates" : "121,85"
+		},
+		{
+			"class" : "weka.knowledgeflow.steps.Classifier",
+			"properties" : {
+				"classifier" : {
+					"type" : "optionHandler",
+					"class" : "weka.classifiers.meta.FilteredClassifier",
+					"options" : "-F \"weka.filters.supervised.attribute.Discretize -R first-last -precision 6\" -W weka.classifiers.trees.J48 -- -C 0.25 -M 2"
+				},
+				"loadClassifierFileName" : "",
+				"name" : "FilteredClassifier",
+				"resetIncrementalClassifier" : false,
+				"updateIncrementalClassifier" : true
+			},
+			"connections" : {
+			},
+			"coordinates" : "231,111"
+		},
+		{
+			"class" : "weka.knowledgeflow.steps.AttributeSummarizer",
+			"properties" : {
+				"name" : "AttributeSummarizer",
+				"offscreenAdditionalOpts" : "",
+				"offscreenHeight" : "400",
+				"offscreenRendererName" : "Weka Chart Renderer",
+				"offscreenWidth" : "500",
+				"offscreenXAxis" : ""
+			},
+			"connections" : {
+			},
+			"coordinates" : "175,283"
+		},
+		{
+			"class" : "weka.knowledgeflow.steps.Classifier",
+			"properties" : {
+				"classifier" : {
+					"type" : "optionHandler",
+					"class" : "weka.classifiers.meta.MultiClassClassifier",
+					"options" : "-M 0 -R 2.0 -S 1 -W weka.classifiers.bayes.NaiveBayes"
+				},
+				"loadClassifierFileName" : "C:/Program Files/Weka-3-8/RunWeka.bat",
+				"name" : "MultiClassClassifier",
+				"resetIncrementalClassifier" : false,
+				"updateIncrementalClassifier" : true
+			},
+			"connections" : {
+			},
+			"coordinates" : "340,271"
+		},
+		{
+			"class" : "weka.knowledgeflow.steps.Classifier",
+			"properties" : {
+				"classifier" : {
+					"type" : "optionHandler",
+					"class" : "weka.classifiers.meta.CostSensitiveClassifier",
+					"options" : "-cost-matrix \"[0.0 2.0; 2.0 0.0]\" -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1"
+				},
+				"loadClassifierFileName" : "",
+				"name" : "CostSensitiveClassifier",
+				"resetIncrementalClassifier" : false,
+				"updateIncrementalClassifier" : true
+			},
+			"connections" : {
+			},
+			"coordinates" : "424,164"
+		},
+		{
+			"class" : "weka.knowledgeflow.steps.Filter",
+			"properties" : {
+				"filter" : {
+					"type" : "optionHandler",
+					"class" : "weka.filters.supervised.instance.ClassBalancer",
+					"options" : "-num-intervals 10"
+				},
+				"name" : "ClassBalancer"
+			},
+			"connections" : {
+			},
+			"coordinates" : "267,388"
+		}
+	]
+}
